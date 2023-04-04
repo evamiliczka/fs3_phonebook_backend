@@ -4,7 +4,15 @@ const app = express()
 
 
 app.use(express.json())
-app.use(morgan('tiny'))
+
+
+morgan.token('host', (req, res) =>  req.headers['host'] )
+//morgan.token('response',  (req, response)  => {return(JSON.stringify(Object.keys(response))) })
+
+app.use(morgan(`Server running on port :host  
+:method :url :status :res[content-length]  - :response-time ms`))
+
+
 
 
 let persons =
