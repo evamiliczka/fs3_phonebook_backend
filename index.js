@@ -1,5 +1,4 @@
 const express = require('express')
-const morgan = require('morgan')
 /*
 * Cross-Origin-Resource Sharing
 * Here, cors is Node's middleware to  
@@ -12,11 +11,6 @@ app.use(cors())
 app.use(express.json())
 
 
-morgan.token('host', (req, res) =>  req.headers['host'] )
-//morgan.token('response',  (req, response)  => {return(JSON.stringify(Object.keys(response))) })
-
-app.use(morgan(`Server running on port :host  
-:method :url :status :res[content-length]  - :response-time ms`))
 
 let persons =
 [
@@ -100,7 +94,7 @@ app.post('/api/persons', (request, response) => {
     response.json(person)
 })
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
