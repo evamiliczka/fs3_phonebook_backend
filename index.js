@@ -13,9 +13,6 @@ morgan.token('host', (req, res) =>  req.headers['host'] )
 app.use(morgan(`Server running on port :host  
 :method :url :status :res[content-length]  - :response-time ms`))
 
-
-
-
 let persons =
 [
     { 
