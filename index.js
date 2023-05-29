@@ -40,8 +40,9 @@ let persons =
 
 //Event handler for apps root
 app.get('/', (request, response) => {
-    response.send('<h1>Hello world</h1>')
-})
+  //  console.log(request);
+      response.send('<h1>Hello world</h1>')
+  })
 
 
 
@@ -66,9 +67,17 @@ app.delete('/api/persons/:id', (request, response) => {
     response.status(204).end();
 })
 
+const generateId = () => {
+  const maxId = persons.length > 0
+    ? Math.max(...perosns.map(n => n.id))
+    : 0;
+  return maxId + 1;
+}
+
+
 app.post('/api/persons', (request, response) => {
     const body = request.body;
-    console.log(body.content);
+   // console.log(body.content);
     if (!body.name){      
         return    response.status(400).json({error: 'name missing'})
     }
@@ -84,7 +93,7 @@ app.post('/api/persons', (request, response) => {
     const person = {
         name : body.name,
         number : body.number,
-        id : Math.floor(Math.random()*100)
+        id : generateId()
     }
 
     persons = persons.concat(person);
