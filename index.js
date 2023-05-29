@@ -69,7 +69,7 @@ app.delete('/api/persons/:id', (request, response) => {
 
 const generateId = () => {
   const maxId = persons.length > 0
-    ? Math.max(...perosns.map(n => n.id))
+    ? Math.max(...persons.map(n => n.id))
     : 0;
   return maxId + 1;
 }
