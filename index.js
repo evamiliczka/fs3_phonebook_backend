@@ -1,17 +1,15 @@
-const express = require('express')
-const morgan = require('morgan')
-const cors = require('cors')
-const app = express()
+const express = require('express');
+const cors = require ('cors');
 
-app.use(cors())
-app.use(express.json())
+/*express, which this time is a 
+function that is used to create an express application stored in the app variable: */
+const app = express();
 
-
-morgan.token('host', (req, res) =>  req.headers['host'] )
-//morgan.token('response',  (req, response)  => {return(JSON.stringify(Object.keys(response))) })
-
-app.use(morgan(`Server running on port :host  
-:method :url :status :res[content-length]  - :response-time ms`))
+app.use(express.json());
+/* To make express show static content, the page index.html and the JavaScript, etc., 
+it fetches, we need a built-in middleware from express called static.*/
+app.use(express.static('build'));
+app.use(cors());
 
 let persons =
 [
@@ -39,15 +37,11 @@ let persons =
 
 //Event handler for apps root
 app.get('/', (request, response) => {
-    response.send(`<h1>Please go to  
-           <a href="http://localhost:3001/api/persons">http://localhost:3001/api/persons </a> or
-           <a href="http://localhost:3001/info">http://localhost:3001/info </a></h1>`)
-})
+  //  console.log(request);
+      response.send('<h1>Hello world</h1>')
+  })
 
-app.get('/info', (request, response) => {
-    response.send(`The phone book has ${persons.length} entries <br><br> ${new Date()} `)
-    
-})
+
 
 app.get('/api/persons', (request, response) => response.json(persons))
 
@@ -70,9 +64,17 @@ app.delete('/api/persons/:id', (request, response) => {
     response.status(204).end();
 })
 
+const generateId = () => {
+  const maxId = persons.length > 0
+    ? Math.max(...persons.map(n => n.id))
+    : 0;
+  return maxId + 1;
+}
+
+
 app.post('/api/persons', (request, response) => {
     const body = request.body;
-    console.log(body.content);
+   // console.log(body.content);
     if (!body.name){      
         return    response.status(400).json({error: 'name missing'})
     }
@@ -88,16 +90,15 @@ app.post('/api/persons', (request, response) => {
     const person = {
         name : body.name,
         number : body.number,
-        id : Math.floor(Math.random()*100)
+        id : generateId()
     }
 
     persons = persons.concat(person);
     response.json(person)
 })
 
-
-
-
-
-const PORT = 3001
-app.listen(PORT)
+const PORT = process.env.PORT || 3001;   
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
+  }
+);
