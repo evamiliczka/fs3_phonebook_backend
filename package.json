@@ -9,14 +9,15 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:ui": "@powershell Remove-Item -Recurse -Force build && cd ../fs2_phonebook_frontend && npm run build && @powershell Copy-Item build -Recurse ../fs3_phonebook_backend",
     "deploy": "flyctl deploy",
-    "deploy:full": "npm run build:ui && npm run deploy",    
+    "deploy:full": "npm run build:ui && npm run deploy",
     "logs:prod": "flyctl logs"
   },
   "author": "Eva Miliczka",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mongoose": "^7.2.2"
   },
   "devDependencies": {
     "morgan": "^1.10.0",
