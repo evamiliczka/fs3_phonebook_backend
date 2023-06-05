@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* ou use the program by passing three command-line arguments (the first is the password), e.g.:
 'node mongo.js yourpassword Anna 040-1234556'
 
@@ -25,7 +26,7 @@ const url =
 mongoose.set('strictQuery', false);
 mongoose.connect(url);
 
-/*Initialise Person*/
+/* Initialise Person */
 const personSchema = new mongoose.Schema({
     name: String,
     number: String,
